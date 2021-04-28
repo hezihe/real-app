@@ -36,8 +36,7 @@ class Signup extends Form {
     try {
       await http.post(`${apiUrl}/users`, data); // await - next line will not be executed till current line wil be resolved
       toast(`${data.name}, you registered successfully!`, {
-        position: 'top-center',
-        autoClose: 5000
+        autoClose: 2500
       });
 
       this.props.history.replace("/signin"); //Route component sends through the props history.replace to child (signup)

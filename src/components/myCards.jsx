@@ -30,7 +30,9 @@ class MyCards extends Component {
         cards = cards.filter(card => card._id !== cardId);
         this.setState({ cards });
         await cardService.deleteCard(cardId);
-        toast("Card has been deleted succesfully");
+        toast("Card has been deleted succesfully", {
+          autoClose: 2500
+        });
         const {data} = await cardService.deleteFavNum({favNum:cardBizNumber});
         console.log(data); // todo remove
       }

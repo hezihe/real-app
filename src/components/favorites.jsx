@@ -65,7 +65,9 @@ class Favorites extends Form {
 
         console.log(this.state.favorites); // todo remove
 
-        toast("The Bookmark was removed succesfully");
+        toast("The Bookmark was removed succesfully", {
+          autoClose: 2500,
+        });
       }
     });
   };
@@ -73,7 +75,9 @@ class Favorites extends Form {
   doSubmit() {
     const { search } = this.state.data;
     let cards = [...this.state.cards];
-    let cards2 = cards.filter((card) => card.bizName.toLowerCase().includes(search));
+    let cards2 = cards.filter((card) =>
+      card.bizName.toLowerCase().includes(search)
+    );
 
     console.log(cards2); // todo remove
     this.setState({ cards2 });
@@ -109,7 +113,10 @@ class Favorites extends Form {
           <div className="col-lg-6">
             <form onSubmit={this.handleSubmit} autoComplete="off" method="POST">
               {this.renderInput("search", "Look for a word of business name")}
-              <p className="text-danger">Note: Use only lowercase letters for search, enter "all" to see all cards</p>
+              <p className="text-danger">
+                Note: Use only lowercase letters for search, enter "all" to see
+                all cards
+              </p>
               {this.renderButton("Search")}
             </form>
           </div>

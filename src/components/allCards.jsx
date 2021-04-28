@@ -1,7 +1,7 @@
 import React from "react";
 import PageHeader from "./common/pageHeader";
 import cardService from "../services/cardService";
-import FavCard  from "./favCard";
+import FavCard from "./favCard";
 import Joi from "joi-browser";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
@@ -25,40 +25,44 @@ class AllCards extends Form {
 
   async componentDidMount() {
     const { data } = await cardService.getAllCards(); // data comes from axios (httpService)
-    if (data.length >0) this.setState({ cards: data });
+    if (data.length > 0) this.setState({ cards: data });
 
     const favs = await cardService.getFavsList();
-    if (favs.data.length >0) this.setState({ favorites: favs.data });
+    if (favs.data.length > 0) this.setState({ favorites: favs.data });
     console.log(favs.data); // todo remove
   }
 
   handleFavorite = async (cardNum, event) => {
     event.preventDefault();
     Swal.fire({
-      title: 'Do you want to add this card as favorite ?',
+      title: "Do you want to add this card as favorite ?",
       showCancelButton: true,
-      confirmButtonText: 'YES',
-      confirmButtonColor: '#dc3545',
-    }).then( async (result) => {
+      confirmButtonText: "YES",
+      confirmButtonColor: "#dc3545",
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        if (this.state.favorites.length >=0) {
+        if (this.state.favorites.length >= 0) {
           let favorites = [...this.state.favorites];
           favorites.push(cardNum);
           this.setState({ favorites });
         }
-      let user = cardService.pushFavNum({cardNumber:cardNum});
+        let user = cardService.pushFavNum({ cardNumber: cardNum });
 
-      console.log(this.state.favorites); // todo remove
-      console.log(user); // todo remove
-      toast("The Bookmark was added succesfully");
+        console.log(this.state.favorites); // todo remove
+        console.log(user); // todo remove
+        toast("The Bookmark was added succesfully", {
+          autoClose: 2500,
+        });
       }
     });
-  }
+  };
 
   doSubmit() {
     const { search } = this.state.data;
     let cards = [...this.state.cards];
-    let cards2 = cards.filter((card) => card.bizName.toLowerCase().includes(search));
+    let cards2 = cards.filter((card) =>
+      card.bizName.toLowerCase().includes(search)
+    );
 
     console.log(cards2); // todo remove
     this.setState({ cards2 });
@@ -66,14 +70,12 @@ class AllCards extends Form {
 
   sortByName() {
     let cardx = [...this.state.cards];
-    if (this.state.cards2.length >0) {
+    if (this.state.cards2.length > 0) {
       cardx = [...this.state.cards2];
     }
     console.log(cardx); // todo remove
     return cardx;
-
   }
-
 
   render() {
     let carda = this.sortByName();
@@ -94,23 +96,26 @@ class AllCards extends Form {
           <div className="col-lg-6">
             <form onSubmit={this.handleSubmit} autoComplete="off" method="POST">
               {this.renderInput("search", "Look for a word of business name")}
-              <p className="text-danger">Note: Use only lowercase letters for search, enter "all" to see all cards</p>
+              <p className="text-danger">
+                Note: Use only lowercase letters for search, enter "all" to see
+                all cards
+              </p>
               {this.renderButton("Search")}
             </form>
           </div>
         </div>
 
         <div className="row">
-          {carda.length >0 &&
-          carda.map((card) => ( 
-            <FavCard
-              favsParam={this.state.favsParam}
-              key={card._id}
-              card={card}
-              favorites={favorites}
-              handleFavorite={this.handleFavorite}
-            />
-          ))}
+          {carda.length > 0 &&
+            carda.map((card) => (
+              <FavCard
+                favsParam={this.state.favsParam}
+                key={card._id}
+                card={card}
+                favorites={favorites}
+                handleFavorite={this.handleFavorite}
+              />
+            ))}
         </div>
       </div>
     );

@@ -47,7 +47,9 @@ class CreateCard extends Form {
       const data  = { ...this.state.data } ;
       if (!data.bizImage) delete data.bizImage;
       await cardService.createCard(data);
-      toast("Your card has been created");
+      toast("Your card has been created", {
+        autoClose: 2500
+      });
       this.props.history.replace("/my-cards");
   };
 

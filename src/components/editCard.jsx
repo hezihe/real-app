@@ -64,7 +64,9 @@ class EditCard extends Form {
       doSubmit = async () => {
           const { data } = this.state;
           await cardService.editCard(data);
-          toast("Card details updated");
+          toast("Card details updated", {
+            autoClose: 2500
+          });
           this.props.history.replace("/my-cards");
       };
     
