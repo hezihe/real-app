@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/App.css"],"names":[],"mappings":"AAAA,UACE,gBACF,CAEA,YACE,aACF","file":"main.d0c1b2ad.chunk.css","sourcesContent":[".minh-900 {\n  min-height: 900px;\n}\n\n.card-title {\n  color: #007bff;\n}\n"]}
